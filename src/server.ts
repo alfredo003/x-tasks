@@ -1,9 +1,17 @@
 import express from "express";
+import { AppDataSource } from "./database"; 
+import { router } from "./routes";
+
 
 const app = express();
+app.use(router);
 
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "Hello!" });
-});
 
-app.listen(2000,()=>console.log("Running Ok!"));
+AppDataSource.initialize()
+  .then(() => {
+    app.listen(2000, () => console.log("Server: Ok!"));
+    console.log("Data Base : Ok!");
+  })
+  .catch((err) => {
+    console.error("Error during Data Source initialization", err);
+  });
