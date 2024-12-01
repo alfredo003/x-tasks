@@ -8,5 +8,8 @@ export const AppDataSource = new DataSource({
   password: "alfredo03",
   database: "xtasks_db",
   entities: [],
+  migrations:[
+    "./src/database/migrations/*.ts" 
+   ]
 });
 
