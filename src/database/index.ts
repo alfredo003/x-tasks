@@ -1,4 +1,5 @@
 import { DataSource } from "typeorm"
+import { Milistone } from "../models/Milistone";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -7,9 +8,8 @@ export const AppDataSource = new DataSource({
   username: "alfredo",
   password: "alfredo03",
   database: "xtasks_db",
-  entities: [],
+  entities: [Milistone],
   migrations:[
     "./src/database/migrations/*.ts" 
    ]
 });
-

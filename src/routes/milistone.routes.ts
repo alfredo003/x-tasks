@@ -1,10 +1,9 @@
 import { Router } from "express";
+import { MilistoneController } from "../controllers/MilistoneController";
 
 const milistoneRouter = Router();
 
-milistoneRouter.get('/',(req,res)=>{
-    res.status(200).json({message:"OK!"});
-})
+milistoneRouter.get("/", MilistoneController.getAll)
 
 
-export {milistoneRouter};
+export{milistoneRouter};
