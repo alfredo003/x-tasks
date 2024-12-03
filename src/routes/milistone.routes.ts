@@ -5,5 +5,6 @@ const milistoneRouter = Router();
 
 milistoneRouter.get("/", MilistoneController.getAll)
 
+milistoneRouter.post("/", MilistoneController.create);
 
 export{milistoneRouter};
