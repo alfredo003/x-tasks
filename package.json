@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn ./src/server.ts",
+    "migration:run":"typeorm migration:run -- -d ./src/database",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
