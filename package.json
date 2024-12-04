@@ -7,10 +7,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn ./src/server.ts",
-    "migration:run":"typeorm migration:run -- -d ./src/database",
+    "migration:run": "typeorm migration:run -- -d ./src/database",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "express": "^4.21.1",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
