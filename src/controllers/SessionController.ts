@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { UserRepository } from "../repositories/UserRepository";
 import { compare } from "bcryptjs";
-
-
+import {sign} from "jsonwebtoken"
+import authConfig from "./../config/auth"
 export class SessionController {
   static async auth(req: Request, res: Response): Promise<Response> {
     const { email, password } = req.body;
@@ -25,7 +25,15 @@ export class SessionController {
       throw new Error("Incorrenct Email | Password.");
     }
 
-   
-      return res.status(500).json(user);
+    const {secret, expiresIn} = authConfig.jwt;
+
+   const token = sign({}, secret,{
+    subject:user.id,
+    expiresIn,
+   });
+    return res.status(500).json({
+      user,
+      token,
+  });
   }
 }
