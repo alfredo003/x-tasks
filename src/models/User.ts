@@ -9,10 +9,10 @@ export class User {
   name: string;
 
   @Column()
-  email: Date;
+  email: string;
 
   @Column()
-  password:string;
+  password: string;
 
   @CreateDateColumn()
   created_at: Date;
