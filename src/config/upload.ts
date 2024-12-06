@@ -6,7 +6,6 @@ export default
 { 
     directory:tmpFolder,
     storage: multer.diskStorage({
-       
         destination:tmpFolder,
         filename(req,file,callback){
             const fileMash = crypto.randomBytes(10).toString('hex');
