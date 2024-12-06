@@ -6,8 +6,8 @@ import ensureAutheticated from "../middlewares/ensureAuthenticaded";
 const router = Router();
 
 router.use("/sessions", sessionsRouter);
-router.use(ensureAutheticated);
-router.use('/milistones',milistoneRouter);
 router.use("/users", usersRouter);
+router.use('/milistones',milistoneRouter);
+
 
 export {router}
