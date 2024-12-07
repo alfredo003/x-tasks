@@ -3,6 +3,7 @@ import { UserRepository } from "../repositories/UserRepository";
 import { compare } from "bcryptjs";
 import {sign} from "jsonwebtoken"
 import authConfig from "./../config/auth"
+import { AppError } from "../errors/AppError";
 export class SessionController {
   static async auth(req: Request, res: Response): Promise<Response> {
     const { email, password } = req.body;
@@ -16,13 +17,13 @@ export class SessionController {
     });
 
     if (!user) {
-      throw new Error("Incorrenct Email | Password.");
+      throw new AppError("Incorrenct Email | Password.");
     }
 
     const passwordMatched = await compare(password, user.password);
 
     if (!passwordMatched) {
-      throw new Error("Incorrenct Email | Password.");
+      throw new AppError("Incorrenct Email | Password.");
     }
 
     const {secret, expiresIn} = authConfig.jwt;

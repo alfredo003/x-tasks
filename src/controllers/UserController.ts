@@ -4,6 +4,7 @@ import { hash } from "bcryptjs";
 import path from "path";
 import upload from "../config/upload";
 import fs from "fs";
+import { AppError } from "../errors/AppError";
 
 export class UserController {
   static async create(req: Request, res: Response): Promise<Response> {
@@ -39,7 +40,7 @@ export class UserController {
     const user = await UserRepository.findOne({ where: { id: user_id } });
     const file = req.file;
 
-    if (!user) throw new Error("Only authenticated users can change avatar.");
+    if (!user) throw new AppError("Only authenticated users can change avatar.",401);
 
     if (user.avatar) {
       const userAvatarFilePath = path.join(upload.directory, user.avatar);
@@ -47,7 +48,7 @@ export class UserController {
         const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
         if (userAvatarFileExists) await fs.promises.unlink(userAvatarFilePath);
       } catch (error) {
-        throw new Error("File no exists in server.")
+        throw new AppError("File no exists in server.");
       }
       
     }
