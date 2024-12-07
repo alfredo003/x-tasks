@@ -10,7 +10,7 @@ import {
 import { Milistone } from "./Milistone";
 
 @Entity("tasks")
-export class User {
+export class Task {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
