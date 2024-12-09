@@ -44,12 +44,9 @@ export class UserController {
 
     if (user.avatar) {
       const userAvatarFilePath = path.join(upload.directory, user.avatar);
-      try {
         const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
         if (userAvatarFileExists) await fs.promises.unlink(userAvatarFilePath);
-      } catch (error) {
         throw new AppError("File no exists in server.");
-      }
       
     }
 

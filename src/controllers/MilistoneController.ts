@@ -1,16 +1,15 @@
 import { Request,Response } from "express"
 import { MilistoneRepository } from "../repositories/MilistoneRepository"
+import { AppError } from "../errors/AppError";
 
 export class MilistoneController 
 {
    static async getAll(req:Request, res:Response):Promise<Response>
     {
-        try {
             const milistones = await MilistoneRepository.find();
+            if(!milistones) throw new AppError("Error fetching milistones",401);
             return res.json(milistones);
-        } catch (error) {
-            return res.status(500).json({message:"Error fetching milistones",error})
-        }
+  
     }
     static async create(req:Request, res:Response):Promise<Response>
     {
@@ -19,17 +18,15 @@ export class MilistoneController
          if (!title || !date || !user_id) {
            return res.status(400).json({ message: "Missing required fields" });
          }
-
-         try {
            const milistone = MilistoneRepository.create({
              title,
              date,
              user_id,
            });
            const milistoneSave = await MilistoneRepository.save(milistone);
+
+           if(!milistoneSave) throw new AppError("Error saving milistone",401);
            return res.status(201).json(milistoneSave);
-         } catch (error) {
-           return res.status(500).json({ message: "Error saving milistone", error });
-         }
+       
     }
 }

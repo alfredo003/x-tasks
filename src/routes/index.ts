@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { milistoneRouter } from "./milistone.routes";
-import { usersRouter } from "./user.routes";
-import { sessionsRouter } from "./sessions.routes";
-import { tasksRouter } from "./tasks.routes";
+import { milistoneRouter } from "@routes/milistone.routes";
+import { usersRouter } from "@routes/user.routes";
+import { sessionsRouter } from "@routes/sessions.routes";
+import { tasksRouter } from "@routes/tasks.routes";
 const router = Router();
 
 router.use("/sessions", sessionsRouter);

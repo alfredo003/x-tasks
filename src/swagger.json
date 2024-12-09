@@ -1,0 +1,183 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Documentation",
+    "description": "Documentation for the API endpoints.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/milistones": {
+      "get": {
+        "summary": "Get all milestones",
+        "operationId": "getAllMilestones",
+        "tags": ["Milestones"],
+        "responses": {
+          "200": {
+            "description": "A list of milestones",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error fetching milestones"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a milestone",
+        "operationId": "createMilestone",
+        "tags": ["Milestones"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "date": { "type": "string", "format": "date-time" },
+                  "user_id": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Milestone created successfully"
+          },
+          "400": {
+            "description": "Missing required fields"
+          },
+          "401": {
+            "description": "Error saving milestone"
+          }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "summary": "Authenticate user",
+        "operationId": "authenticateUser",
+        "tags": ["Sessions"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": { "type": "object" },
+                    "token": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Missing required fields" },
+          "401": { "description": "Incorrect email or password" }
+        }
+      }
+    },
+    "/tasks": {
+      "get": {
+        "summary": "Get all tasks",
+        "operationId": "getAllTasks",
+        "tags": ["Tasks"],
+        "responses": {
+          "200": { "description": "A list of tasks" },
+          "401": { "description": "Error fetching tasks" }
+        }
+      },
+      "post": {
+        "summary": "Create a task",
+        "operationId": "createTask",
+        "tags": ["Tasks"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "milistone_id": { "type": "string" },
+                  "status": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Task created successfully" },
+          "400": { "description": "Missing required fields" },
+          "401": { "description": "Error saving task" }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "summary": "Create a user",
+        "operationId": "createUser",
+        "tags": ["Users"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User created successfully" },
+          "400": { "description": "Missing required fields" },
+          "500": { "description": "Error saving user" }
+        }
+      }
+    },
+    "/users/upload-avatar": {
+      "post": {
+        "summary": "Upload user avatar",
+        "operationId": "uploadAvatar",
+        "tags": ["Users"],
+        "responses": {
+          "201": { "description": "Avatar uploaded successfully" },
+          "401": {
+            "description": "Only authenticated users can change avatar"
+          },
+          "500": { "description": "Error uploading avatar" }
+        }
+      }
+    }
+  }
+}
