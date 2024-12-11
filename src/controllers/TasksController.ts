@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 
 export class TasksController {
   static async getAll(req: Request, res: Response): Promise<Response> {
+
     const tasks = await TaskRepository.find();
     if (tasks) {
       return res.status(200).json(tasks);

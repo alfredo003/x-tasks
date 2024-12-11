@@ -6,22 +6,24 @@ export class MilistoneController
 {
    static async getAll(req:Request, res:Response):Promise<Response>
     {
-            const milistones = await MilistoneRepository.find();
+            const milistones = await MilistoneRepository.find({
+              where: { user_id: req.user.id }
+            });
             if(!milistones) throw new AppError("Error fetching milistones",401);
             return res.json(milistones);
   
     }
     static async create(req:Request, res:Response):Promise<Response>
     {
-        const {title,date,user_id} = req.body;
+        const {title,date} = req.body;
 
-         if (!title || !date || !user_id) {
+         if (!title || !date) {
            return res.status(400).json({ message: "Missing required fields" });
          }
            const milistone = MilistoneRepository.create({
              title,
              date,
-             user_id,
+             user_id:req.user.id,
            });
            const milistoneSave = await MilistoneRepository.save(milistone);
 

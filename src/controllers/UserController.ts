@@ -15,25 +15,27 @@ export class UserController {
     }
 
     const userAlreadyExists = await UserRepository.findOne({
-      where: { email },
+      where: { email: email },
     });
 
-    if (userAlreadyExists) throw new Error("Email address already used!");
+    if (userAlreadyExists) throw new AppError("Email address already used!",401);
 
     const hasPassword = await hash(password, 8);
 
-    try {
+
       const user = UserRepository.create({
         name,
         email,
         password: hasPassword,
       });
       const userSave = await UserRepository.save(user);
+
+      if(!userSave) throw new AppError("Error saving user!",401);
+
       delete userSave.password;
+
       return res.status(201).json(userSave);
-    } catch (error) {
-      return res.status(500).json({ message: "Error saving user", error });
-    }
+  
   }
   static async uploadAvatar(req: Request, res: Response): Promise<Response> {
     const { id: user_id } = req.user;
